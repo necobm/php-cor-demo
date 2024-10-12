@@ -1,11 +1,15 @@
 <?php
-
 include __DIR__ . '/../index.php';
 
-global $userRepository;
-$middleware = new \App\Security\CheckCredentials($userRepository);
+use App\Core\Server;
+use App\Security\CheckAdminAccess;
+use App\Security\CheckCredentials;
 
-$server = new \App\Core\Server($middleware);
+global $userRepository;
+$middleware = new CheckCredentials($userRepository);
+$middleware->linkWith(new CheckAdminAccess($userRepository));
+
+$server = new Server($middleware);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST["username"];
     $password = $_POST["password"];

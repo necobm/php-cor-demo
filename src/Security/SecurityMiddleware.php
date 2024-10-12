@@ -2,14 +2,16 @@
 
 namespace App\Security;
 
-abstract class Middleware
+use App\Security\User\UserDto;
+
+abstract class SecurityMiddleware
 {
-    private ?Middleware $next = null;
+    private ?SecurityMiddleware $next = null;
 
     /**
      * This method can be used to build a chain of middleware objects.
      */
-    public function linkWith(Middleware $next): Middleware
+    public function linkWith(SecurityMiddleware $next): SecurityMiddleware
     {
         $this->next = $next;
 
@@ -21,12 +23,12 @@ abstract class Middleware
      * subclass can fall back to the parent implementation if it can't process a
      * request.
      */
-    public function check(string $email, string $password): bool
+    public function check(UserDto $user): bool
     {
         if (\is_null($this->next)) {
             return true;
         }
 
-        return $this->next->check($email, $password);
+        return $this->next->check($user);
     }
 }

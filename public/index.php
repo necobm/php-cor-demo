@@ -1,7 +1,8 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
 
-ERROR_REPORTING(E_ALL);
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 
 use App\Security\User\User;

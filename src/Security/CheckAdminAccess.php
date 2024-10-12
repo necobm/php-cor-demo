@@ -2,13 +2,14 @@
 
 namespace App\Security;
 
+use App\Security\User\User;
 use App\Security\User\UserDto;
 use App\Security\User\UserRepository;
 
 /**
- * This Concrete Middleware checks whether a user with given credentials exists and have valid credentials.
+ * This Concrete Middleware checks whether a user have Admin role to access restricted sections of the app.
  */
-class CheckCredentials extends SecurityMiddleware
+class CheckAdminAccess extends SecurityMiddleware
 {
     public function __construct(
         private UserRepository $userRepository,
@@ -19,13 +20,13 @@ class CheckCredentials extends SecurityMiddleware
     {
         $user = $this->userRepository->find($userDto->username);
         if (\is_null($user)) {
-            echo "CheckCredentials: This email is not registered!\n";
+            echo "CheckAdminAccess: User not found!\n";
 
             return false;
         }
 
-        if ($user->getPassword() !== $userDto->password) {
-            echo "CheckCredentials: Wrong password!\n";
+        if (!in_array(User::ROLE_ADMIN, $user->getRoles())) {
+            echo "CheckAdminAccess: Access forbidden!\n";
 
             return false;
         }
