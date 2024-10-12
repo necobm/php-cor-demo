@@ -1,10 +1,22 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
 
-use App\Simple;
+ERROR_REPORTING(E_ALL);
 
-$test = new Simple;
 
-$test->set("Hello world \n");
+use App\Security\User\User;
+use App\Security\User\UserRepository;
 
-echo $test->get();
+global $userRepository;
+$userRepository = new UserRepository();
+
+$userRepository->add(new User(
+    username: 'admin@myemail.com',
+    password: 'admin-password',
+    roles: ['ROLE_ADMIN']
+));
+
+$userRepository->add(new User(
+    username: 'client@myemail.com',
+    password: 'client-password'
+));
