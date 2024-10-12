@@ -1,8 +1,6 @@
-# PHP boilerplate with composer psr-4, phpunit and cs-fixer.
+# PHP implementation of Chain of responsibility pattern.
 
-> This project is a fork of [madeny/phpboilerplate](https://github.com/madeny/phpboilerplate)
-
-Instead of setting up a project everytime, just fork, and clone it every time you want to start a new project.
+Demo for implementing Chain of responsibility pattern in PHP
 
 ## Requirements
 
